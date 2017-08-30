@@ -12,6 +12,7 @@ class ExpenseItem extends React.Component {
         <div>
           <div className='content'>
             <h2>{expense.title}</h2>
+              <p>price: {expense.price}</p>
             <button onClick={() => expenseDelete(expense)}>X</button>
           </div>
           <div className='editing'>

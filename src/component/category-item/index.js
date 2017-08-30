@@ -9,31 +9,33 @@ import ExpenseItem from '../expense-item'
 
 class CategoryItem extends React.Component {
   render() {
+    let categoryID = this.props.category.id;
+
     return (
       <section className='category-item'>
         <button onClick={() => this.props.categoryDelete(this.props.category)}>X</button>
 
         <div>
-          <p>name: {this.props.category.name}</p>
+          <h2>{this.props.category.name}</h2>
           <p>budget: {this.props.category.budget}</p>
         </div>
 
         <CategoryForm
-          buttonText='update da category'
+          buttonText='update'
           onComplete={this.props.categoryUpdate}
           category={this.props.category}
         />
 
+
         <ExpenseForm
-          buttonText='add expense'
+          buttonText='add'
           onComplete={this.props.expenseCreate}
           category={this.props.category}
         />
 
-        {this.props.expenses.map(item =>
+        {this.props.expenses ? this.props.expenses[categoryID].map(item =>
           <ExpenseItem key={item.id} expense={item} />
-        )}
-
+        ) : <p>add an expense</p>}
       </section>
     )
   }
@@ -46,9 +48,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch, getState) => {
-  return{
-    expenseCreate: (expense) => dispatch(expenseActionCreate(category));
+  return {
+    expenseCreate: (expense) => dispatch(expenseActionCreate(expense))
   }
 }
 
-export default CategoryItem;
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryItem);
